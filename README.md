@@ -217,18 +217,15 @@ eve-lab組織にCF-POP1/POP2として登録。
 
 ### Challenge
 
-WARP client routes all traffic through Cloudflare by default. This includes the WireGuard endpoint IP addresses (global IPs of the remote POP).
+WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
 
 **Problem:**
-1. POP1 tries to connect to POP2's WireGuard endpoint (49.109.x.x)
-2. WARP intercepts this traffic and routes it through Cloudflare
-3. WireGuard cannot establish direct UDP connection to the endpoint
-4. Result: WireGuard tunnel fails to establish
+- POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.109.x.x)
+- POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
+- WireGuard tunnel cannot be established
 ```
-POP1 ──► WARP ──► Cloudflare ──► ???
-                      │
-                      └── Cannot reach POP2 WireGuard endpoint
-                          (traffic is being tunneled, not direct)
+POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
+POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
 ```
 
 ### Solution
@@ -240,16 +237,16 @@ Added WireGuard endpoint IPs to Split Tunnel exclusion list:
 | 106.73.26.0/32 | POP1 WireGuard Endpoint |
 | 49.109.0.0/16 | POP2 WireGuard Endpoint (docomo range) |
 
-**Result:** WireGuard traffic bypasses WARP and connects directly over the internet.
+**Result:** WireGuard traffic bypasses WARP and connects directly.
 ```
 POP1 ──► Direct Internet ──► POP2 WireGuard endpoint ✓
-    (bypasses WARP)
+POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
 ```
 
 **【日本語サマリ】**
 
-WARPはデフォルトで全トラフィックをCloudflare経由にするため、WireGuard EndpointのグローバルIPへの通信もWARP経由となり、直接UDP接続ができずトンネル確立に失敗。Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直接インターネット経由で接続することで解決。
-
+WARPがデフォルトで全トラフィックをCloudflare経由にするため、お互いのWireGuard Endpointへの通信がブロックされトンネル確立に失敗。
+Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直接インターネット経由で接続することで解決。
 ---
 
 ## Key Learnings
