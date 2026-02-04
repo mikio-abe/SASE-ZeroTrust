@@ -87,6 +87,7 @@ Configured IdPs:
 **【日本語サマリ】**
 
 SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+
 ---
 
 ## Traffic Flow
