@@ -172,7 +172,9 @@ DNS-level blocking prevents TCP connection establishment entirely.
 
 ### Gateway Logs
 
-**[ 📷 ここに画像添付：Cloudflare Dashboard DNS/HTTP Logs ]**
+**<img width="1724" height="1528" alt="image" src="https://github.com/user-attachments/assets/9ace8fa2-b4bd-483f-9b33-5d88b7f78668" />
+<img width="1724" height="1528" alt="image" src="https://github.com/user-attachments/assets/9ace8fa2-b4bd-483f-9b33-5d88b7f78668" />
+：Cloudflare Dashboard DNS/HTTP Logs ]**
 
 Logs confirm:
 - Device identity (non_identity@eve-lab.cloudflareaccess.com)
