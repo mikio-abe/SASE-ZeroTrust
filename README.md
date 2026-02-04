@@ -122,6 +122,8 @@ FG1 ─── IPsec ESP ─── POP1 ═══ WireGuard ═══ POP2 ──
 
 In production, Cloudflare Magic WAN would replace WireGuard for site interconnection.
 
+```
+
 ### Tunnel Encapsulation
 
 | Tunnel Type | Protocol | Port | Visibility |
