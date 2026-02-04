@@ -43,7 +43,7 @@ Traffic inspection and policy enforcement occur after SD-WAN path selection but 
 clearly separating transport decisions from security controls.
 
 <br>　**【日本語サマリ】**  <br>
-本コンポーネントはSD-WANの経路制御とは独立したセキュリティレイヤーとして動作し、経路選択後の通信に対してポリシー制御を行います。
+本コンポーネントはSD-WANの経路制御とは独立したセキュリティレイヤーとして動作し、経路選択後の通信にポリシー制御を行います。
 
 ---
 
