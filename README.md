@@ -215,14 +215,17 @@ Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
 
 ### Enrolled Devices
 
+**<img width="1568" height="662" alt="image" src="https://github.com/user-attachments/assets/d73d655b-d77d-4078-b397-74cb01d06d18" />
+📷 Cloudflare Dashboard - Devices**
+
 | Device | Registration | Organization |
 |--------|--------------|--------------|
 | CF-POP1 | Service Token | eve-lab |
 | CF-POP2 | Service Token | eve-lab |
 
- <br>**【日本語サマリ】**　<br>
-ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、
-eve-lab組織にCF-POP1/POP2として登録。
+**【日本語サマリ】**
+
+ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-POP1/POP2として登録。
 
 ---
 
