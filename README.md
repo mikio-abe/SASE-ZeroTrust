@@ -68,8 +68,8 @@ clearly separating transport decisions from security controls.
 | Application Access | Per-app access policies |
 | Device Posture | WARP client enrollment verification |
 
-** <img width="1716" height="669" alt="image" src="https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502" />
-📷 Identity Provider integrations**
+<img width="1716" height="669" alt="image" src="https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502" />
+📷 Identity Provider integrations
 
 Configured IdPs:
 - **Auth0** - OpenID Connect integration
