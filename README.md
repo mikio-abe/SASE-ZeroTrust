@@ -253,31 +253,16 @@ Split TunnelにEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外登録し�
 
 ### SASE Visibility Model
 
-Traditional network troubleshooting relies on packet inspection. SASE changes this:
+In encrypted environments (WARP/QUIC), traditional packet capture cannot see TCP handshakes or payload.
 
-| Traditional | SASE |
-|-------------|------|
-| Wireshark/tcpdump | Gateway Logs |
-| SYN/ACK analysis | DNS/HTTP policy logs |
-| Packet payload | Encrypted - not visible |
+**Instead, use Cloudflare Gateway Logs for:**
+- DNS query and response
+- HTTP request and policy action
+- Device identity and connection status
 
-### Policy-First Design
+**【日本語サマリ】**
 
-SASE enforces policy at multiple layers:
-1. **DNS** - Block resolution before connection
-2. **HTTP** - Inspect and filter after decryption
-3. **Network** - Split Tunnel controls routing
-
-### Integration with SD-WAN
-
-SASE path is one of multiple SD-WAN paths:
-- MPLS path for enterprise traffic
-- SASE path for internet-bound traffic
-- Health-check determines active path
-
- <br>**【日本語サマリ】**　<br>
-SASEではパケットキャプチャよりGateway Logs重視。DNS→HTTP→Networkの多層ポリシー適用。
-SD-WANの複数パス（MPLS/SASE）の一つとして統合。
+WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見えない。代わりにCloudflare Gateway LogsでDNS/HTTPポリシー適用状況を確認。
 
 ---
 
