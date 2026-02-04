@@ -76,17 +76,20 @@ Configured IdPs:
 - **Entra ID** - Azure AD integration
 - **One-time PIN** - Fallback method
 
-### DNS Filtering
+### DNS Locations
 
-| Function | Implementation |
-|----------|----------------|
-| Policy Enforcement | Block resolution for prohibited domains |
-| Null Response | Returns 0.0.0.0 / :: for blocked queries |
-| Logging | Full DNS query visibility in Gateway logs |
+| Location | Device | DoH Endpoint |
+|----------|--------|--------------|
+| eve-lab | CF-POP1 | https://xx579sxsi4.cloudflare-gateway.com/dns-query |
+| eve-lab-2 | CF-POP2 | (別エンドポイント) |
+
+Each POP uses a dedicated DNS location for policy enforcement and logging separation.
 
 **【日本語サマリ】**
 
-SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。
+DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それぞれ固有のDoHエンドポイントを使用。デバイス別のポリシー適用とログ分離が可能。
 
 ---
 
