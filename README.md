@@ -191,6 +191,11 @@ Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ### Service Token Authentication
 
+### Service Token Authentication
+
+**[ <img width="1708" height="627" alt="image" src="https://github.com/user-attachments/assets/2f267a3f-40bc-466d-9fd2-5afe7d41a6b6" />
+📷 Cloudflare Dashboard - Service Tokens 画面 ]**
+
 For headless Linux devices (no browser-based auth):
 
 | Parameter | Purpose |
