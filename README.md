@@ -6,14 +6,20 @@ Secure Access Service Edge (SASE) implementation using Cloudflare Zero Trust, in
 
 ## Overview
 
-This component demonstrates Zero Trust security enforcement at the network edge, providing:
+This component is part of an SD-WAN–integrated SASE lab.
+It focuses on how traffic visibility and security enforcement points change
+when traffic traverses encrypted tunnels.
 
-- **Secure Web Gateway (SWG)** - Content filtering, TLS inspection
-- **Zero Trust Network Access (ZTNA)** - Application-level access control
-- **DNS Filtering** - Policy enforcement at DNS resolution
+The lab demonstrates Zero Trust security enforcement at the network edge, including:
 
-**【日本語サマリ】**
-Cloudflare Zero Trustを使用したSASE実装。SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケーションアクセス制御）、DNSフィルタリングによるゼロトラストセキュリティを実現。
+- **Secure Web Gateway (SWG)** – Content filtering and TLS inspection
+- **Zero Trust Network Access (ZTNA)** – Application-level access control
+- **DNS Filtering** – Policy enforcement at DNS resolution
+
+**【日本語サマリ】**  
+Cloudflare Zero Trustを使用したSASE実装。  
+SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケーションアクセス制御）、  
+DNSフィルタリングによるゼロトラストセキュリティを検証。
 
 ---
 
@@ -32,7 +38,10 @@ Cloudflare Zero Trustを使用したSASE実装。SWG（コンテンツフィル�
 └──────────────────────────────────────────────────────┘
 ```
 
-SASE operates as the **Security Layer** above SD-WAN, enforcing policy regardless of which path traffic takes.
+This SASE component operates at the security layer, above the SD-WAN overlay and independent of the MPLS underlay.
+
+Traffic inspection and policy enforcement occur after SD-WAN path selection but before application access,
+clearly separating transport decisions from security controls.
 
 ---
 
