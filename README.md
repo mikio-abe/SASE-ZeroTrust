@@ -244,9 +244,9 @@ POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
 ```
 
 **【日本語サマリ】**
-
 WARPがデフォルトで全トラフィックをCloudflare経由にするため、お互いのWireGuard Endpointへの通信がブロックされトンネル確立に失敗。
 Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直接インターネット経由で接続することで解決。
+
 ---
 
 ## Key Learnings
