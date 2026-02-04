@@ -83,7 +83,6 @@ SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspect
 ## Traffic Flow
 
 ### WARP Client Connection
-
 ```
 Endpoint (WARP Client)
        │
@@ -98,6 +97,45 @@ Cloudflare Gateway (NRT - Tokyo)
        ▼
    Internet / Private Resources
 ```
+
+### WireGuard POP-to-POP Connection
+
+POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:
+```
+POP1 (Site A)                                    POP2 (Site B)
+10.255.0.1                                       10.255.0.2
+     │                                                │
+     │◄────────── WireGuard Tunnel ──────────────────►│
+     │            UDP 4960                            │
+     │            (over Internet via WARP)            │
+     │                                                │
+     ▼                                                ▼
+   ens5 ──► WARP ──► Cloudflare ◄─── WARP ◄─── ens5
+                      Gateway
+```
+
+This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:
+```
+FG1 ─── IPsec ESP ─── POP1 ═══ WireGuard ═══ POP2 ─── IPsec ESP ─── FG2
+        (10.0.0.1)              (Internet)              (10.0.1.1)
+```
+
+In production, Cloudflare Magic WAN would replace WireGuard for site interconnection.
+
+### Tunnel Encapsulation
+
+| Tunnel Type | Protocol | Port | Visibility |
+|-------------|----------|------|------------|
+| WARP/MASQUE | QUIC | UDP 443 | Encrypted from start |
+| WireGuard | UDP | 4960 | POP-to-POP site connectivity |
+| IPsec (ESP) | Protocol 50 | - | SD-WAN overlay (FG1-FG2) |
+
+Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
+
+**【日本語サマリ】**
+WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
+POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
+本番環境ではWireGuardの代わりにMagic WANを使用。
 
 ### Tunnel Encapsulation
 
