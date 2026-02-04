@@ -43,6 +43,10 @@ This SASE component operates at the security layer, above the SD-WAN overlay and
 Traffic inspection and policy enforcement occur after SD-WAN path selection but before application access,
 clearly separating transport decisions from security controls.
 
+**【日本語サマリ】**  
+本コンポーネントはSD-WANの経路制御とは独立したセキュリティレイヤーとして動作し、
+経路選択後の通信に対してポリシー制御を行います。
+
 ---
 
 ## Components
