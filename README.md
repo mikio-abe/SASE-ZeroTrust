@@ -262,7 +262,8 @@ In encrypted environments (WARP/QUIC), traditional packet capture cannot see TCP
 
 **【日本語サマリ】**
 
-WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見えない。代わりにCloudflare Gateway LogsでDNS/HTTPポリシー適用状況を確認。
+WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見えない。
+代わりにCloudflare Gateway LogsでDNS/HTTPポリシー適用状況を確認。
 
 ---
 
