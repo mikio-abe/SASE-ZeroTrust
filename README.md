@@ -133,6 +133,7 @@ In production, Cloudflare Magic WAN would replace WireGuard for site interconnec
 | IPsec (ESP) | Protocol 50 | - | SD-WAN overlay (FG1-FG2) |
 
 Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
+
 **【日本語サマリ】**
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
 POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
