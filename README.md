@@ -16,7 +16,7 @@ The lab demonstrates Zero Trust security enforcement at the network edge, includ
 - **Zero Trust Network Access (ZTNA)** – Application-level access control
 - **DNS Filtering** – Policy enforcement at DNS resolution
 
-**【日本語サマリ】**  <br>
+ <br>**【日本語サマリ】**  <br>
 Cloudflare Zero Trustを使用したSASE実装。 
 SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケーションアクセス制御）、  
 DNSフィルタリングによるゼロトラストセキュリティを検証。
@@ -75,7 +75,7 @@ clearly separating transport decisions from security controls.
 | Null Response | Returns 0.0.0.0 / :: for blocked queries |
 | Logging | Full DNS query visibility in Gateway logs |
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection、
 ZTNAはService Token認証とアプリケーション単位のアクセス制御、
 DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
@@ -133,10 +133,9 @@ WireGuard is used in this lab as an alternative because the POP devices (Linux) 
 | WireGuard | UDP | 4960 | POP-to-POP site connectivity |
 | IPsec (ESP) | Protocol 50 | - | SD-WAN overlay (FG1-FG2) |
 
-Unlike traditional TLS, QUIC/MASQUE encrypts immediately 
-- no visible ClientHello/ServerHello handshake in packet captures.
+Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
 POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
 本番環境では拠点間接続にBGP over IPsecを使用。ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
@@ -180,7 +179,7 @@ Logs confirm:
 - Policy application (Block/Allow/Bypass)
 - Timestamp and query details
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。
 HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。
 Gateway Logsでデバイス識別・ポリシー適用を確認。
@@ -207,7 +206,7 @@ Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
 | CF-POP1 | Service Token | eve-lab |
 | CF-POP2 | Service Token | eve-lab |
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、
 eve-lab組織にCF-POP1/POP2として登録。
 
@@ -243,7 +242,7 @@ Added WireGuard endpoints to Split Tunnel exclusion list:
 
 This ensures WireGuard traffic bypasses WARP and uses direct internet path.
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 WARPがWireGuard EndpointをCloudflare経由でルーティングし、ループが発生。
 Split TunnelにEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外登録して解決。
 
@@ -275,7 +274,7 @@ SASE path is one of multiple SD-WAN paths:
 - SASE path for internet-bound traffic
 - Health-check determines active path
 
-**【日本語サマリ】**　<br>
+ <br>**【日本語サマリ】**　<br>
 SASEではパケットキャプチャよりGateway Logs重視。DNS→HTTP→Networkの多層ポリシー適用。
 SD-WANの複数パス（MPLS/SASE）の一つとして統合。
 
