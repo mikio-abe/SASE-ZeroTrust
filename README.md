@@ -228,7 +228,9 @@ eve-lab組織にCF-POP1/POP2として登録。
 ### Challenge
 
 WARP client routes all traffic through Cloudflare by default, including WireGuard endpoint IPs. This created a routing loop:
+
 ```
+
 WireGuard Endpoint (106.73.26.0)
        │
        └─── Routed via WARP ───┐
@@ -237,10 +239,10 @@ WireGuard Endpoint (106.73.26.0)
        │
        ▼
   WARP Tunnel (broken - endpoint unreachable)
+
 ```
 
 ### Solution
-
 Added WireGuard endpoints to Split Tunnel exclusion list:
 
 | Entry | Description |
