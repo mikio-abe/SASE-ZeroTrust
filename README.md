@@ -76,7 +76,9 @@ clearly separating transport decisions from security controls.
 | Logging | Full DNS query visibility in Gateway logs |
 
 **【日本語サマリ】**
-SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection、ZTNAはService Token認証とアプリケーション単位のアクセス制御、DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection、
+ZTNAはService Token認証とアプリケーション単位のアクセス制御、
+DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
 
 ---
 
@@ -132,7 +134,8 @@ In production, Cloudflare Magic WAN would replace WireGuard for site interconnec
 | WireGuard | UDP | 4960 | POP-to-POP site connectivity |
 | IPsec (ESP) | Protocol 50 | - | SD-WAN overlay (FG1-FG2) |
 
-Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
+Unlike traditional TLS, QUIC/MASQUE encrypts immediately
+- no visible ClientHello/ServerHello handshake in packet captures.
 
 **【日本語サマリ】**
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
@@ -145,7 +148,8 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 |-------------|----------|------|------------|
 | WARP/MASQUE | QUIC | UDP 443 | Encrypted from start |
 
-Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
+Unlike traditional TLS, QUIC/MASQUE encrypts immediately
+- no visible ClientHello/ServerHello handshake in packet captures.
 
 ---
 
@@ -187,7 +191,9 @@ Logs confirm:
 - Timestamp and query details
 
 **【日本語サマリ】**
-DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。Gateway Logsでデバイス識別・ポリシー適用を確認。
+DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。
+HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。
+Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ---
 
@@ -212,7 +218,8 @@ Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
 | CF-POP2 | Service Token | eve-lab |
 
 **【日本語サマリ】**
-ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-POP1/POP2として登録。
+ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、
+eve-lab組織にCF-POP1/POP2として登録。
 
 ---
 
@@ -220,7 +227,8 @@ Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
 
 ### Challenge
 
-WARP client routes all traffic through Cloudflare by default, including WireGuard endpoint IPs. This created a routing loop:
+WARP client routes all traffic through Cloudflare by default, including WireGuard endpoint IPs.
+This created a routing loop:
 
 ```
 WireGuard Endpoint (106.73.26.0)
@@ -245,7 +253,8 @@ Added WireGuard endpoints to Split Tunnel exclusion list:
 This ensures WireGuard traffic bypasses WARP and uses direct internet path.
 
 **【日本語サマリ】**
-WARPがWireGuard EndpointをCloudflare経由でルーティングし、ループが発生。Split TunnelにEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外登録して解決。
+WARPがWireGuard EndpointをCloudflare経由でルーティングし、ループが発生。
+Split TunnelにEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外登録して解決。
 
 ---
 
@@ -276,7 +285,8 @@ SASE path is one of multiple SD-WAN paths:
 - Health-check determines active path
 
 **【日本語サマリ】**
-SASEではパケットキャプチャよりGateway Logs重視。DNS→HTTP→Networkの多層ポリシー適用。SD-WANの複数パス（MPLS/SASE）の一つとして統合。
+SASEではパケットキャプチャよりGateway Logs重視。DNS→HTTP→Networkの多層ポリシー適用。
+SD-WANの複数パス（MPLS/SASE）の一つとして統合。
 
 ---
 
