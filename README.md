@@ -133,21 +133,13 @@ WireGuard is used in this lab as an alternative because the POP devices (Linux) 
 | WireGuard | UDP | 4960 | POP-to-POP site connectivity |
 | IPsec (ESP) | Protocol 50 | - | SD-WAN overlay (FG1-FG2) |
 
-Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
+Unlike traditional TLS, QUIC/MASQUE encrypts immediately 
+- no visible ClientHello/ServerHello handshake in packet captures.
 
 **【日本語サマリ】**　<br>
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
 POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
 本番環境では拠点間接続にBGP over IPsecを使用。ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
-
-### Tunnel Encapsulation
-
-| Tunnel Type | Protocol | Port | Visibility |
-|-------------|----------|------|------------|
-| WARP/MASQUE | QUIC | UDP 443 | Encrypted from start |
-
-Unlike traditional TLS, QUIC/MASQUE encrypts immediately
-- no visible ClientHello/ServerHello handshake in packet captures.
 
 ---
 
