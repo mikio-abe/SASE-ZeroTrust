@@ -18,8 +18,7 @@ The lab demonstrates Zero Trust security enforcement at the network edge, includ
 
  <br>**【日本語サマリ】**  <br>
 Cloudflare Zero Trustを使用したSASE実装。 
-SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケーションアクセス制御）、  
-DNSフィルタリングによるゼロトラストセキュリティを検証。
+SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケーションアクセス制御）、DNSフィルタリングによるゼロトラストセキュリティを検証。
 
 ---
 
@@ -43,9 +42,8 @@ This SASE component operates at the security layer, above the SD-WAN overlay and
 Traffic inspection and policy enforcement occur after SD-WAN path selection but before application access,
 clearly separating transport decisions from security controls.
 
-**【日本語サマリ】**  <br>
-本コンポーネントはSD-WANの経路制御とは独立したセキュリティレイヤーとして動作し、
-経路選択後の通信に対してポリシー制御を行います。
+<br>　**【日本語サマリ】**  <br>
+本コンポーネントはSD-WANの経路制御とは独立したセキュリティレイヤーとして動作し、経路選択後の通信に対してポリシー制御を行います。
 
 ---
 
@@ -85,10 +83,10 @@ Configured IdPs:
 
 Each POP uses a dedicated DNS location for policy enforcement and logging separation.
 
-**【日本語サマリ】**
+<br>　**【日本語サマリ】**　<br>
 
-SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。
-DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。<br>
+DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。<br>
 POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それぞれ固有のDoHエンドポイントを使用。デバイス別のポリシー適用とログ分離が可能。
 
 ---
@@ -147,8 +145,8 @@ WireGuard is used in this lab as an alternative because the POP devices (Linux) 
 Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHello/ServerHello handshake in packet captures.
 
  <br>**【日本語サマリ】**　<br>
-WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
-POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
+WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。<br>
+POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。<br>
 本番環境では拠点間接続にBGP over IPsecを使用。ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
 
 ---
@@ -263,7 +261,7 @@ POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
 ```
 
 **【日本語サマリ】**
-WARPがデフォルトで全トラフィックをCloudflare経由にするため、お互いのWireGuard Endpointへの通信がブロックされトンネル確立に失敗。
+WARPがデフォルトで全トラフィックをCloudflare経由にするため、お互いのWireGuard Endpointへの通信がブロックされトンネル確立に失敗。<br>
 Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直接インターネット経由で接続することで解決。
 
 ---
