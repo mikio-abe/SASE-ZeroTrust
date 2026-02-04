@@ -122,7 +122,8 @@ FG1 ─── IPsec ESP ─── POP1 ═══ WireGuard ═══ POP2 ──
         (10.0.0.1)              (Internet)              (10.0.1.1)
 ```
 
-In production, Cloudflare Magic WAN would replace WireGuard for site interconnection.
+In production, site-to-site connectivity would use BGP over IPsec configured directly on edge routers. 
+WireGuard is used in this lab as an alternative because the POP devices (Linux) cannot run BGP over IPsec natively.
 
 ### Tunnel Encapsulation
 
@@ -137,7 +138,7 @@ Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHell
 **【日本語サマリ】**
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。
 POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。
-本番環境ではWireGuardの代わりにMagic WANを使用。
+本番環境では拠点間接続にBGP over IPsecを使用。ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
 
 ### Tunnel Encapsulation
 
