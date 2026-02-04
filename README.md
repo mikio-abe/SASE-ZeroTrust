@@ -63,9 +63,18 @@ clearly separating transport decisions from security controls.
 
 | Function | Implementation |
 |----------|----------------|
-| Identity Integration | Service Token authentication for headless devices |
+| Identity Integration | Service Token for headless devices, IdP for browser-based auth |
+| Identity Providers | Auth0 (OpenID Connect), Entra ID (Azure AD) |
 | Application Access | Per-app access policies |
 | Device Posture | WARP client enrollment verification |
+
+** <img width="1716" height="669" alt="image" src="https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502" />
+📷 Identity Provider integrations**
+
+Configured IdPs:
+- **Auth0** - OpenID Connect integration
+- **Entra ID** - Azure AD integration
+- **One-time PIN** - Fallback method
 
 ### DNS Filtering
 
@@ -75,11 +84,9 @@ clearly separating transport decisions from security controls.
 | Null Response | Returns 0.0.0.0 / :: for blocked queries |
 | Logging | Full DNS query visibility in Gateway logs |
 
- <br>**【日本語サマリ】**　<br>
-SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection、
-ZTNAはService Token認証とアプリケーション単位のアクセス制御、
-DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
+**【日本語サマリ】**
 
+SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。
 ---
 
 ## Traffic Flow
