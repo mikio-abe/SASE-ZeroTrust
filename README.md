@@ -87,7 +87,8 @@ Each POP uses a dedicated DNS location for policy enforcement and logging separa
 
 SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。<br>
 DNSフィルタリングは禁止ドメインへのNull応答（0.0.0.0/::）を実装。<br>
-POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それぞれ固有のDoHエンドポイントを使用。デバイス別のポリシー適用とログ分離が可能。
+POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それぞれ固有のDoHエンドポイントを使用。<br>
+デバイス別のポリシー適用とログ分離が可能。
 
 ---
 
@@ -147,7 +148,8 @@ Unlike traditional TLS, QUIC/MASQUE encrypts immediately - no visible ClientHell
  <br>**【日本語サマリ】**　<br>
 WARPクライアントはUDP 443（QUIC/MASQUE）でCloudflare Gatewayに接続し、DNS/HTTP/TLSポリシーを適用。<br>
 POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1-FG2間のSD-WAN IPsec（ESP）トラフィックを転送。<br>
-本番環境では拠点間接続にBGP over IPsecを使用。ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
+本番環境では拠点間接続にBGP over IPsecを使用。<br>
+ラボではLinux POPでBGP over IPsecが設定できないためWireGuardで代替。
 
 ---
 
@@ -190,8 +192,8 @@ Logs confirm:
 - Timestamp and query details
 
  <br>**【日本語サマリ】**　<br>
-DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。
-HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。
+DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。<br>
+HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。<br>
 Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ---
@@ -226,7 +228,8 @@ Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
 
 **【日本語サマリ】**
 
-ヘッドレスLinuxデバイスはService Token認証を使用。MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-POP1/POP2として登録。
+ヘッドレスLinuxデバイスはService Token認証を使用。<br>
+MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-POP1/POP2として登録。
 
 ---
 
@@ -279,7 +282,7 @@ In encrypted environments (WARP/QUIC), traditional packet capture cannot see TCP
 
 **【日本語サマリ】**
 
-WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見えない。
+WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見えない。<br>
 代わりにCloudflare Gateway LogsでDNS/HTTPポリシー適用状況を確認。
 
 ---
