@@ -83,7 +83,7 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 ## Traffic Flow
 
 ### WARP Client Connection
-<img width="300" height="280" alt="image" src="https://github.com/user-attachments/assets/d3f7937f-c14d-46d3-a74b-4d24f3904b73" />
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/c0a5f931-05a6-452b-8ef0-c66ba1703697" />
 
 
 ### WireGuard POP-to-POP Connection
