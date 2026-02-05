@@ -157,14 +157,12 @@ WARP client routes all traffic through Cloudflare by default. This caused WARP t
 - POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
 - WireGuard tunnel cannot be established
 
-
-```
-
+---
 POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
 POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
-
 ---
 
+```
 
 ## 🔀Traffic Flow
 
