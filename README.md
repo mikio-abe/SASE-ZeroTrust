@@ -88,16 +88,16 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 
 ### WireGuard POP-to-POP Connection
 
-POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:
+POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:<BR>
+
 <img width="500" height="260" alt="image" src="https://github.com/user-attachments/assets/22d1e188-9d4d-46ab-b33a-928e6d1b8d57" />
 
-This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:
-<img width="600" height="70" alt="image" src="https://github.com/user-attachments/assets/6f4610ee-c685-41e2-8a24-ca6d7d5a66a2" />
+<BR>
 
-```
-FG1 ─── IPsec ESP ─── POP1 ═══ WireGuard ═══ POP2 ─── IPsec ESP ─── FG2
-        (10.0.0.1)              (Internet)              (10.0.1.1)
-```
+This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:<BR>
+<img width="600" height="80" alt="image" src="https://github.com/user-attachments/assets/6f4610ee-c685-41e2-8a24-ca6d7d5a66a2" />
+
+<BR>
 
 In production, site-to-site connectivity would use BGP over IPsec configured directly on edge routers. 
 WireGuard is used in this lab as an alternative because the POP devices (Linux) cannot run BGP over IPsec natively.
