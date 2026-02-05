@@ -37,7 +37,7 @@ clearly separating transport decisions from security controls.
 
 ## 🧩Components
 
-### Secure Web Gateway (SWG)
+### 🔧Secure Web Gateway (SWG)
 
 | Function | Implementation |
 |----------|----------------|
@@ -45,7 +45,7 @@ clearly separating transport decisions from security controls.
 | TLS Inspection | Decrypt-inspect-re-encrypt for HTTPS traffic |
 | HTTP Logging | Full visibility into allowed/blocked requests |
 
-### Zero Trust Network Access (ZTNA)
+### 🔧Zero Trust Network Access (ZTNA)
 
 | Function | Implementation |
 |----------|----------------|
@@ -62,7 +62,7 @@ Configured IdPs:
 - **Entra ID** - Azure AD integration
 - **One-time PIN** - Fallback method
 
-### DNS Locations
+### 🔧DNS Locations
 
 | Location | Device | DoH Endpoint |
 |----------|--------|--------------|
@@ -80,7 +80,7 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 
 ---
 
-## Client Deployment (CF-POP1 / CF-POP2)
+## 🔧Client Deployment (CF-POP1 / CF-POP2)
 
 Both POPs are headless Linux (Debian 12) inside EVE-NG. All setup performed via CLI.
 
@@ -146,8 +146,24 @@ cloudflared, WARP, and systemd-resolved all compete for port 53.
 　**【日本語サマリ】**
 ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。
 
----
+### Split Tunnel Configuration
 
+#### Challenge
+
+WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
+
+**Problem:**
+- POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.109.x.x)
+- POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
+- WireGuard tunnel cannot be established
+
+
+```
+
+POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
+POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
+
+---
 
 
 ## 🔀Traffic Flow
@@ -237,21 +253,6 @@ Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ---
 
-
-## 🔧Split Tunnel Configuration
-
-### Challenge
-
-WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
-
-**Problem:**
-- POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.109.x.x)
-- POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
-- WireGuard tunnel cannot be established
-```
-POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
-POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
-```
 
 ### Solution
 
