@@ -83,6 +83,8 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 ## Traffic Flow
 
 ### WARP Client Connection
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/96f6e03e-ed49-4708-8870-144c31f9173f" />
+
 ```
 Endpoint (WARP Client)
        │
