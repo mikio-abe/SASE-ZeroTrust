@@ -238,7 +238,7 @@ Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直�
 
 ---
 
-## Key Learnings
+## 🚀Key Learnings
 
 ### SASE Visibility Model
 
