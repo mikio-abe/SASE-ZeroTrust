@@ -146,9 +146,7 @@ cloudflared, WARP, and systemd-resolved all compete for port 53.
 　**【日本語サマリ】**
 ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。
 
-### Split Tunnel Configuration
-
-#### Challenge
+### 5. Split Tunnel Configuration
 
 WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
 
@@ -157,12 +155,29 @@ WARP client routes all traffic through Cloudflare by default. This caused WARP t
 - POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
 - WireGuard tunnel cannot be established
 
----
+```
 POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
 POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
----
+```
+
+**Solution:** Added WireGuard endpoint IPs to Split Tunnel exclusion list:
+
+| Entry | Description |
+|-------|-------------|
+| 106.73.26.0/32 | POP1 WireGuard Endpoint |
+| 49.109.0.0/16 | POP2 WireGuard Endpoint (docomo range) |
+
+**Result:** WireGuard traffic bypasses WARP and connects directly.
 
 ```
+POP1 ──► Direct Internet ──► POP2 WireGuard endpoint ✓
+POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
+```
+
+　**【日本語サマリ】**
+ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。WARPがデフォルトで全トラフィックをCloudflare経由にするため、WireGuard Endpoint IPをSplit Tunnelで除外し直接接続を確保。
+
+---
 
 ## 🔀Traffic Flow
 
@@ -175,7 +190,6 @@ POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
 POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:<BR>
 
 <img width="520" alt="image" src="https://github.com/user-attachments/assets/1aa707cc-c8c7-4999-8b35-afb7f8accbac" />
-
 
 <BR><BR>
 
@@ -236,8 +250,9 @@ DNS-level blocking prevents TCP connection establishment entirely.
 
 ### Gateway Logs
 
-**<img width="1724" height="1528" alt="image" src="https://github.com/user-attachments/assets/9ace8fa2-b4bd-483f-9b33-5d88b7f78668" />
-📷Cloudflare Dashboard DNS/HTTP Logs ]**
+<img width="1724" height="1528" alt="image" src="https://github.com/user-attachments/assets/9ace8fa2-b4bd-483f-9b33-5d88b7f78668" />
+
+**📷 Cloudflare Dashboard DNS/HTTP Logs**
 
 Logs confirm:
 - Device identity (non_identity@eve-lab.cloudflareaccess.com)
@@ -248,28 +263,6 @@ Logs confirm:
 DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。<br>
 HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。<br>
 Gateway Logsでデバイス識別・ポリシー適用を確認。
-
----
-
-
-### Solution
-
-Added WireGuard endpoint IPs to Split Tunnel exclusion list:
-
-| Entry | Description |
-|-------|-------------|
-| 106.73.26.0/32 | POP1 WireGuard Endpoint |
-| 49.109.0.0/16 | POP2 WireGuard Endpoint (docomo range) |
-
-**Result:** WireGuard traffic bypasses WARP and connects directly.
-```
-POP1 ──► Direct Internet ──► POP2 WireGuard endpoint ✓
-POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
-```
-
-**【日本語サマリ】**
-WARPがデフォルトで全トラフィックをCloudflare経由にするため、お互いのWireGuard Endpointへの通信がブロックされトンネル確立に失敗。<br>
-Split TunnelでEndpoint IP（106.73.26.0/32, 49.109.0.0/16）を除外し、直接インターネット経由で接続することで解決。
 
 ---
 
