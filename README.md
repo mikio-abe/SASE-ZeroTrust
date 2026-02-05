@@ -4,7 +4,7 @@ Secure Access Service Edge (SASE) implementation using Cloudflare Zero Trust, in
 
 ---
 
-## Overview
+## 🔬Overview
 
 This component is part of an SD-WAN–integrated SASE lab.
 It focuses on how traffic visibility and security enforcement points change
