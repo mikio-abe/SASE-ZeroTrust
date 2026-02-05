@@ -143,9 +143,6 @@ cloudflared, WARP, and systemd-resolved all compete for port 53.
 | CF-POP1 | WARP | cloudflared proxy-dns, systemd-resolved | WARP handles DNS + HTTP inspection |
 | CF-POP2 | cloudflared proxy-dns | systemd-resolved | DoH required for eve-lab-2 identification |
 
-　**【日本語サマリ】**
-ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。
-
 ### 5. Split Tunnel Configuration
 
 WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
@@ -175,7 +172,8 @@ POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
 ```
 
 　**【日本語サマリ】**
-ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。WARPがデフォルトで全トラフィックをCloudflare経由にするため、WireGuard Endpoint IPをSplit Tunnelで除外し直接接続を確保。
+ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。
+ポート53競合はPOP別の役割分担で解決。WARPがデフォルトで全トラフィックをCloudflare経由にするため、WireGuard Endpoint IPをSplit Tunnelで除外し直接接続を確保。
 
 ---
 
