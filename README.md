@@ -79,7 +79,7 @@ Configured IdPs:
 | Location | Device | DoH Endpoint |
 |----------|--------|--------------|
 | eve-lab | CF-POP1 | https://xx579sxsi4.cloudflare-gateway.com/dns-query |
-| eve-lab-2 | CF-POP2 | (別エンドポイント) |
+| eve-lab-2 | CF-POP2 | (Separate endpoint) |
 
 Each POP uses a dedicated DNS location for policy enforcement and logging separation.
 
