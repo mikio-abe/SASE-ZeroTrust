@@ -93,13 +93,13 @@ POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site co
 <img width="500" height="270" alt="image" src="https://github.com/user-attachments/assets/e56bcb2d-7acc-4b34-a509-01b8a2b6a4dd" />
 
 
-<BR>
+<BR><BR>
 
 This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:<BR>
 
 <img width="600" height="65" alt="image" src="https://github.com/user-attachments/assets/6f4610ee-c685-41e2-8a24-ca6d7d5a66a2" />
 
-<BR>
+<BR><BR>
 
 In production, site-to-site connectivity would use BGP over IPsec configured directly on edge routers. 
 WireGuard is used in this lab as an alternative because the POP devices (Linux) cannot run BGP over IPsec natively.
