@@ -90,7 +90,7 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 
 POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:<BR>
 
-<img width="500" height="270" alt="image" src="https://github.com/user-attachments/assets/e56bcb2d-7acc-4b34-a509-01b8a2b6a4dd" />
+<img width="520" alt="image" src="https://github.com/user-attachments/assets/1aa707cc-c8c7-4999-8b35-afb7f8accbac" />
 
 
 <BR><BR>
