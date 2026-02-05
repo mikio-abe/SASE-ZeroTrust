@@ -80,6 +80,75 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 
 ---
 
+## Client Deployment (CF-POP1 / CF-POP2)
+
+Both POPs are headless Linux (Debian 12) inside EVE-NG. All setup performed via CLI.
+
+### 1. Package Installation
+
+```bash
+# GPG key and repository
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | \
+  gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] \
+  https://pkg.cloudflareclient.com/ bookworm main" \
+  > /etc/apt/sources.list.d/cloudflare-client.list
+
+apt update && apt install -y cloudflare-warp cloudflared
+```
+
+### 2. TLS Certificate (for SWG TLS Inspection)
+
+```bash
+curl -o /usr/local/share/ca-certificates/cloudflare.crt \
+  https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
+update-ca-certificates
+```
+
+### 3. Device Enrollment via Service Token
+
+Headless devices cannot use browser-based IdP login. Service Token + mdm.xml was used instead.
+
+![image](https://github.com/user-attachments/assets/2f267a3f-40bc-466d-9fd2-5afe7d41a6b6)
+**📷 Cloudflare Dashboard - Service Tokens**
+
+```xml
+<!-- /var/lib/cloudflare-warp/mdm.xml -->
+<dict>
+  <key>organization</key>
+  <string>eve-lab</string>
+  <key>auth_client_id</key>
+  <string>[Service Token Client ID].access</string>
+  <key>auth_client_secret</key>
+  <string>[Service Token Client Secret]</string>
+</dict>
+```
+
+```bash
+systemctl restart warp-svc
+warp-cli connect
+warp-cli status    # → "Connected" confirms enrollment
+```
+
+![image](https://github.com/user-attachments/assets/d73d655b-d77d-4078-b397-74cb01d06d18)
+**📷 Cloudflare Dashboard - Enrolled Devices (CF-POP1 / CF-POP2)**
+
+### 4. DNS Service Conflict Resolution
+
+cloudflared, WARP, and systemd-resolved all compete for port 53.
+
+| POP | Active DNS | Stopped | Reason |
+|-----|-----------|---------|--------|
+| CF-POP1 | WARP | cloudflared proxy-dns, systemd-resolved | WARP handles DNS + HTTP inspection |
+| CF-POP2 | cloudflared proxy-dns | systemd-resolved | DoH required for eve-lab-2 identification |
+
+　**【日本語サマリ】**
+ヘッドレスLinuxにCLIでWARP/cloudflaredをインストール、TLS証明書配置、Service Token認証でデバイス登録。ポート53競合はPOP別の役割分担で解決。
+
+---
+
+
 
 ## 🔀Traffic Flow
 
