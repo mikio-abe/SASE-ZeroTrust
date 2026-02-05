@@ -85,21 +85,6 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 ### WARP Client Connection
 <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/96f6e03e-ed49-4708-8870-144c31f9173f" />
 
-```
-Endpoint (WARP Client)
-       │
-       │ UDP 443 (QUIC/MASQUE)
-       ▼
-Cloudflare Gateway (NRT - Tokyo)
-       │
-       ├─── DNS Policy Check
-       ├─── HTTP Policy Check
-       └─── TLS Inspection (if enabled)
-       │
-       ▼
-   Internet / Private Resources
-```
-
 ### WireGuard POP-to-POP Connection
 
 POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:
