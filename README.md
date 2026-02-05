@@ -22,7 +22,7 @@ SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケ�
 
 ---
 
-## Architecture Position
+## 🏗Architecture Position
 <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/472db3a0-f997-4b9b-a3a2-75365e2ea9f0" />
 
 This SASE component operates at the security layer, above the SD-WAN overlay and independent of the MPLS underlay.
@@ -35,7 +35,7 @@ clearly separating transport decisions from security controls.
 
 ---
 
-## Components
+## 🧩Components
 
 ### Secure Web Gateway (SWG)
 
@@ -80,7 +80,7 @@ POP1とPOP2で別々のDNS Location（eve-lab, eve-lab-2）を設定し、それ
 
 ---
 
-## Traffic Flow
+## 🔀Traffic Flow
 
 ### WARP Client Connection
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/c0a5f931-05a6-452b-8ef0-c66ba1703697" />
@@ -122,7 +122,7 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 
 ---
 
-## Verification Results
+## ✅Verification Results
 
 ### DNS Blocking Verification
 
@@ -167,7 +167,7 @@ Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ---
 
-## Device Enrollment
+## 📱Device Enrollment
 
 ### Service Token Authentication
 
@@ -202,7 +202,7 @@ MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-P
 
 ---
 
-## Split Tunnel Configuration
+## 🔧Split Tunnel Configuration
 
 ### Challenge
 
@@ -256,7 +256,7 @@ WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見�
 
 ---
 
-## Related Components
+## 🔗Related Components
 
 - [SD-WAN](../SD-WAN) - Path selection and failover
 - [Brownout](../Brownout) - Quality degradation detection
