@@ -237,40 +237,6 @@ Gateway Logsでデバイス識別・ポリシー適用を確認。
 
 ---
 
-## 📱Device Enrollment
-
-### Service Token Authentication
-
-### Service Token Authentication
-
-**<img width="1708" height="627" alt="image" src="https://github.com/user-attachments/assets/2f267a3f-40bc-466d-9fd2-5afe7d41a6b6" />
-📷 Cloudflare Dashboard - Service Tokens**
-
-For headless Linux devices (no browser-based auth):
-
-| Parameter | Purpose |
-|-----------|---------|
-| auth_client_id | Service Token identifier |
-| auth_client_secret | Authentication credential |
-
-Configuration delivered via MDM file (`/var/lib/cloudflare-warp/mdm.xml`)
-
-### Enrolled Devices
-
-**<img width="1568" height="662" alt="image" src="https://github.com/user-attachments/assets/d73d655b-d77d-4078-b397-74cb01d06d18" />
-📷 Cloudflare Dashboard - Devices**
-
-| Device | Registration | Organization |
-|--------|--------------|--------------|
-| CF-POP1 | Service Token | eve-lab |
-| CF-POP2 | Service Token | eve-lab |
-
-**【日本語サマリ】**
-
-ヘッドレスLinuxデバイスはService Token認証を使用。<br>
-MDMファイル経由でauth_client_id/secretを配布し、eve-lab組織にCF-POP1/POP2として登録。
-
----
 
 ## 🔧Split Tunnel Configuration
 
