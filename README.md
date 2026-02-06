@@ -23,7 +23,7 @@ SWG（コンテンツフィルタリング、TLS検査）、ZTNA（アプリケ�
 ---
 
 ## 🏗Architecture Position
-<img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/472db3a0-f997-4b9b-a3a2-75365e2ea9f0" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/e91a20f1-3cf3-4629-a8a9-df8145b5517d" />
 
 This SASE component operates at the security layer, above the SD-WAN overlay and independent of the MPLS underlay.
 
