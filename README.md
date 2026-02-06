@@ -222,6 +222,14 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 
 ## ✅Verification Results
 
+📷 Wireshark ESP Capture - SASE Path Traffic
+<img width="860" alt="image" src="https://github.com/user-attachments/assets/4fb626a2-e222-4f14-89f8-2166e81f507e" />
+
+
+
+ESP traffic between POP1 (10.0.0.1) and POP2 (10.0.1.1) via Cloudflare WARP tunnel.
+
+
 ### DNS Blocking Verification
 
 **Test:** `curl https://www.bet365.com` (Gambling category)
