@@ -267,7 +267,7 @@ Logs confirm:
 - Timestamp and query details
 
  <br>**【日本語サマリ】**　<br>
-WiresharkでSASEパス経由のESPトラフィック（POP1-POP2間）とI/Oグラフを可視化。
+WiresharkでSASEパス経由のESPトラフィック（POP1-POP2間）とI/Oグラフを可視化。<br>
 DNSブロックはbet365.com等に対し0.0.0.0/::を返却しTCP接続を阻止。<br>
 HTTPポリシーでGambling/Adultカテゴリをブロック、Cloudflare内部通信はBYPASS。<br>
 Gateway Logsでデバイス識別・ポリシー適用を確認。
