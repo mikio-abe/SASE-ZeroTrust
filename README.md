@@ -299,9 +299,10 @@ WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見�
 
 ## 🔗Related Components
 
-- [SD-WAN](../SD-WAN) - Path selection and failover
-- [Brownout](../Brownout) - Quality degradation detection
-- [Troubleshooting](../Troubleshooting) - Encrypted tunnel analysis
+- [SD-WAN](https://github.com/mikio-abe/SD-WAN) - Path selection and failover
+- [Troubleshooting](https://github.com/mikio-abe/Troubleshooting) - Encrypted tunnel analysis
+- [Enterprise-SP](https://github.com/mikio-abe/Enterprise-SP) - Service provider configuration
+- [Lab-vs-Production](https://github.com/mikio-abe/Lab-vs-Production) - Lab and production comparison
 
 ---
 
