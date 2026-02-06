@@ -164,12 +164,7 @@ POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
 POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
 ```
 
-Solution: Added WireGuard endpoint IPs to Split Tunnel exclusion list:
-
-| Entry | Description |
-|-------|-------------|
-| 106.73.26.0/32 | POP1 WireGuard Endpoint |
-| 49.109.0.0/16 | POP2 WireGuard Endpoint (docomo range) |
+Solution: Added WireGuard endpoint IPs to Split Tunnel exclusion list.
 
 Result: WireGuard traffic bypasses WARP and connects directly.
 
