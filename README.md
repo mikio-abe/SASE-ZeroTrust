@@ -226,8 +226,8 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 <img width="1760" alt="image" src="https://github.com/user-attachments/assets/a32cc5c0-cd92-4a6d-9e53-716795002353" />
 
 
-ESP packets (Protocol 50) between POP1 (10.0.0.1) and POP2 (10.0.1.1).
-I/O Graph shows traffic pattern during normal operation.
+ICMP packets between POP1 (10.255.0.1) and POP2 (10.255.0.2) via WireGuard tunnel.  <BR>
+I/O Graph shows stable connectivity.
 
 
 ### DNS Blocking Verification
