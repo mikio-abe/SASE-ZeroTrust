@@ -223,7 +223,8 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 ## ✅Verification Results
 
 📷 Wireshark ESP Capture - SASE Path Traffic
-<img width="860" alt="image" src="https://github.com/user-attachments/assets/4fb626a2-e222-4f14-89f8-2166e81f507e" />
+<img width="1760" alt="image" src="https://github.com/user-attachments/assets/ae77f17e-9b8c-47a2-bfac-db073ace4e93" />
+
 
 
 
