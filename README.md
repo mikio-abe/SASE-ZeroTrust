@@ -221,14 +221,12 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 ---
 
 ## ✅Verification Results
-
+### ESP Traffic Capture
 📷 Wireshark ESP Capture - SASE Path Traffic
 <img width="1760" alt="image" src="https://github.com/user-attachments/assets/ae77f17e-9b8c-47a2-bfac-db073ace4e93" />
 
-
-
-
-ESP traffic between POP1 (10.0.0.1) and POP2 (10.0.1.1) via Cloudflare WARP tunnel.
+ESP packets (Protocol 50) between POP1 (10.0.0.1) and POP2 (10.0.1.1).
+I/O Graph shows traffic pattern during normal operation.
 
 
 ### DNS Blocking Verification
