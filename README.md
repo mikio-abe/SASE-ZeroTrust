@@ -45,14 +45,6 @@ clearly separating transport decisions from security controls.
 | TLS Inspection | Decrypt-inspect-re-encrypt for HTTPS traffic |
 | HTTP Logging | Full visibility into allowed/blocked requests |
 
-TLS Certificate installation is required for TLS Inspection:
-
-```bash
-curl -o /usr/local/share/ca-certificates/cloudflare.crt \
-  https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
-update-ca-certificates
-```
-
 ### 🔧DNS Filter
 
 | Location | Device | DoH Endpoint |
@@ -61,15 +53,6 @@ update-ca-certificates
 | eve-lab-2 | CF-POP2 | (Separate endpoint) |
 
 Each POP uses a dedicated DNS location for policy enforcement and logging separation.
-
-**DNS Service Conflict Resolution:**
-
-cloudflared, WARP, and systemd-resolved all compete for port 53.
-
-| POP | Active DNS | Stopped | Reason |
-|-----|-----------|---------|--------|
-| CF-POP1 | WARP | cloudflared proxy-dns, systemd-resolved | WARP handles DNS + HTTP inspection |
-| CF-POP2 | cloudflared proxy-dns | systemd-resolved | DoH required for eve-lab-2 identification |
 
 ### 🔧Zero Trust Network Access (ZTNA)
 
@@ -80,38 +63,31 @@ cloudflared, WARP, and systemd-resolved all compete for port 53.
 | Application Access | Per-app access policies |
 | Device Posture | WARP client enrollment verification |
 
-**<img width="1716" height="669" alt="image" src="https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502" />
-📷 Identity Provider integrations**
+#### IdP Integration
+
+![image](https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502)
+**📷 Identity Provider integrations**
 
 Configured IdPs:
 - **Auth0** - OpenID Connect integration
 - **Entra ID** - Azure AD integration
 - **One-time PIN** - Fallback method
 
-#### Client Deployment (CF-POP1 / CF-POP2)
-
-Both POPs are headless Linux (Debian 12) inside EVE-NG. All setup performed via CLI.
-
-**1. Package Installation**
-
-```bash
-# GPG key and repository
-curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | \
-  gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] \
-  https://pkg.cloudflareclient.com/ bookworm main" \
-  > /etc/apt/sources.list.d/cloudflare-client.list
-
-apt update && apt install -y cloudflare-warp cloudflared
-```
-
-**2. Device Enrollment via Service Token**
-
-Headless devices cannot use browser-based IdP login. Service Token + mdm.xml was used instead.
+#### Service Token Authentication
 
 ![image](https://github.com/user-attachments/assets/2f267a3f-40bc-466d-9fd2-5afe7d41a6b6)
 **📷 Cloudflare Dashboard - Service Tokens**
+
+For headless Linux devices (no browser-based auth):
+
+| Parameter | Purpose |
+|-----------|---------|
+| auth_client_id | Service Token identifier |
+| auth_client_secret | Authentication credential |
+
+#### Device Enrollment
+
+Configuration delivered via MDM file:
 
 ```xml
 <!-- /var/lib/cloudflare-warp/mdm.xml -->
@@ -134,11 +110,51 @@ warp-cli status    # → "Connected" confirms enrollment
 ![image](https://github.com/user-attachments/assets/d73d655b-d77d-4078-b397-74cb01d06d18)
 **📷 Cloudflare Dashboard - Enrolled Devices (CF-POP1 / CF-POP2)**
 
-**3. Split Tunnel Configuration**
+| Device | Registration | Organization |
+|--------|--------------|--------------|
+| CF-POP1 | Service Token | eve-lab |
+| CF-POP2 | Service Token | eve-lab |
+
+#### Client Deployment (CF-POP1 / CF-POP2)
+
+Both POPs are headless Linux (Debian 12) inside EVE-NG. All setup performed via CLI.
+
+**Package Installation**
+
+```bash
+# GPG key and repository
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | \
+  gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] \
+  https://pkg.cloudflareclient.com/ bookworm main" \
+  > /etc/apt/sources.list.d/cloudflare-client.list
+
+apt update && apt install -y cloudflare-warp cloudflared
+```
+
+**TLS Certificate (for SWG TLS Inspection)**
+
+```bash
+curl -o /usr/local/share/ca-certificates/cloudflare.crt \
+  https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
+update-ca-certificates
+```
+
+**DNS Service Conflict Resolution**
+
+cloudflared, WARP, and systemd-resolved all compete for port 53.
+
+| POP | Active DNS | Stopped | Reason |
+|-----|-----------|---------|--------|
+| CF-POP1 | WARP | cloudflared proxy-dns, systemd-resolved | WARP handles DNS + HTTP inspection |
+| CF-POP2 | cloudflared proxy-dns | systemd-resolved | DoH required for eve-lab-2 identification |
+
+**Split Tunnel Configuration**
 
 WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
 
-**Problem:**
+Problem:
 - POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.109.x.x)
 - POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
 - WireGuard tunnel cannot be established
@@ -148,14 +164,14 @@ POP1 ──► WARP ──✕ Blocked ──✕ POP2 WireGuard endpoint
 POP2 ──► WARP ──✕ Blocked ──✕ POP1 WireGuard endpoint
 ```
 
-**Solution:** Added WireGuard endpoint IPs to Split Tunnel exclusion list:
+Solution: Added WireGuard endpoint IPs to Split Tunnel exclusion list:
 
 | Entry | Description |
 |-------|-------------|
 | 106.73.26.0/32 | POP1 WireGuard Endpoint |
 | 49.109.0.0/16 | POP2 WireGuard Endpoint (docomo range) |
 
-**Result:** WireGuard traffic bypasses WARP and connects directly.
+Result: WireGuard traffic bypasses WARP and connects directly.
 
 ```
 POP1 ──► Direct Internet ──► POP2 WireGuard endpoint ✓
@@ -164,9 +180,11 @@ POP2 ──► Direct Internet ──► POP1 WireGuard endpoint ✓
 
 <br>　**【日本語サマリ】**　<br>
 
-SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection（証明書インストール必須）。<br>
-DNSフィルタリングはPOP別のDNS Location（eve-lab, eve-lab-2）で禁止ドメインへのNull応答（0.0.0.0/::）を実装。ポート53競合はPOP別の役割分担で解決。<br>
-ZTNAはService Token（ヘッドレスデバイス用）とIdP連携（Auth0/Entra ID）によるブラウザ認証をサポート。WARPがデフォルトで全トラフィックをCloudflare経由にするため、WireGuard Endpoint IPをSplit Tunnelで除外し直接接続を確保。
+SWGはカテゴリベースのコンテンツフィルタリングとTLS Inspection。<br>
+DNSフィルタリングはPOP別のDNS Location（eve-lab, eve-lab-2）で禁止ドメインへのNull応答（0.0.0.0/::）を実装。<br>
+ZTNAはIdP連携（Auth0/Entra ID）によるブラウザ認証と、Service Token（ヘッドレスデバイス用）をサポート。<br>
+デバイス登録はmdm.xmlでService Token認証情報を配布し、warp-cli connectで完了。<br>
+クライアント展開ではWARP/cloudflaredインストール、TLS証明書配置、ポート53競合解決、Split Tunnel設定（WireGuard Endpoint除外）を実施。
 
 ---
 
@@ -212,14 +230,14 @@ POP1-POP2間はWireGuard（UDP 4960）でサイト間接続し、その上でFG1
 ---
 
 ## ✅Verification Results
+
 ### ICMP Traffic Capture
+
 📷 Wireshark ICMP Capture - SASE Path Traffic
 <img width="1760" alt="image" src="https://github.com/user-attachments/assets/a32cc5c0-cd92-4a6d-9e53-716795002353" />
 
-
-ICMP packets between POP1 (10.255.0.1) and POP2 (10.255.0.2) via WireGuard tunnel.  <BR>
+ICMP packets between POP1 (10.255.0.1) and POP2 (10.255.0.2) via WireGuard tunnel.<BR>
 I/O Graph shows stable connectivity.
-
 
 ### DNS Blocking Verification
 
