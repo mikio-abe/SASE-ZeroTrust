@@ -155,8 +155,8 @@ cloudflared, WARP, and systemd-resolved all compete for port 53.
 WARP client routes all traffic through Cloudflare by default. This caused WARP to block direct communication to each other's WireGuard endpoints.
 
 Problem:
-- POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.109.x.x)
-- POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.73.26.x)
+- POP1's WARP blocks traffic to POP2's WireGuard endpoint (49.x.x.x)
+- POP2's WARP blocks traffic to POP1's WireGuard endpoint (106.x.x.x)
 - WireGuard tunnel cannot be established
 
 ```
