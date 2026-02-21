@@ -152,7 +152,7 @@ curl -o /usr/local/share/ca-certificates/cloudflare.crt \
 update-ca-certificates
 ```
 
-**【日本語サマリ】** SWGのTLS Inspection（HTTPS復号検査）用にCloudflare Root CA証明書をインストール。<br>GatewayがHTTPS通信を復号→検査→再暗号化するため、エンドポイント側でこの証明書を信頼しないとHTTPS接続が証明書エラーで失敗。
+**【日本語サマリ】** <br> SWGのTLS Inspection（HTTPS復号検査）用にCloudflare Root CA証明書をインストール。<br>GatewayがHTTPS通信を復号→検査→再暗号化するため、エンドポイント側でこの証明書を信頼しないとHTTPS接続が証明書エラーで失敗。
 
 ## Gateway Connection Methods
 
