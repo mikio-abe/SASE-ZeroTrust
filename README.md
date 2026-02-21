@@ -177,9 +177,9 @@ POP2 uses cloudflared as a local DoH proxy (port 53), forwarding queries to a de
 
 **【日本語サマリ】**<br>
 Cloudflare GatewayはWARP（フルトンネル）、DoH（DNS専用）、IPv4 DNS（エージェントレス）の
-3種類の接続方法を提供。本ラボでは同一NAT配下の2拠点を区別するため、
+3種類の接続方法を提供しています。本ラボでは同一NAT配下の2拠点を区別するため、
 POP1はWARP、POP2はDoH URLトークンで別のDNS Locationに接続し、
-拠点別ポリシー適用とログ分離を実現。
+拠点別ポリシー適用とログ分離を実現しました。
 
 **DNS Service Conflict Resolution**
 
