@@ -115,14 +115,21 @@ warp-cli status    # → "Connected" confirms enrollment
 | CF-POP1 | Service Token | eve-lab |
 | CF-POP2 | Service Token | eve-lab |
 
-#### Client Deployment (CF-POP1 / CF-POP2)
+## Client Deployment (CF-POP1 / CF-POP2)
 
-Both POPs are headless Linux (Debian 12) inside EVE-NG. All setup performed via CLI.
+Both POPs are headless Linux (Debian 12) running inside EVE-NG.
+To connect these endpoints to Cloudflare Zero Trust, two packages must be installed via CLI:
 
-**Package Installation**
+| Package | Role |
+|---------|------|
+| cloudflare-warp | WARP client — tunnels all traffic to Cloudflare Gateway (SWG) |
+| cloudflared | DoH proxy — forwards DNS queries to Gateway without WARP |
 
+**【日本語サマリ】**<br> EVE-NG内のヘッドレスLinux（Debian 12）をCloudflare Zero Trustに接続するため、CLIで2つのパッケージをインストール。<br>cloudflare-warpは全通信をGateway経由にするWARPクライアント、cloudflaredはWARP無しでDNSクエリのみGatewayに転送するDoHプロキシに設定しました。
+
+### Package Installation
 ```bash
-# GPG key and repository
+# Add Cloudflare GPG key and repository
 curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | \
   gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 
@@ -133,13 +140,19 @@ echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] \
 apt update && apt install -y cloudflare-warp cloudflared
 ```
 
-**TLS Certificate (for SWG TLS Inspection)**
+**【日本語サマリ】** <br>　CloudflareのGPGキーとリポジトリを追加し、WARPクライアント（全通信をGateway経由）とcloudflared（DNSのみGateway転送するDoHプロキシ）の2パッケージをインストール。
 
+### TLS Certificate (for SWG TLS Inspection)
+
+Cloudflare Gateway performs TLS decryption to inspect HTTPS traffic.
+The Cloudflare Root CA must be trusted on the endpoint, or HTTPS connections will fail.
 ```bash
 curl -o /usr/local/share/ca-certificates/cloudflare.crt \
   https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
 update-ca-certificates
 ```
+
+**【日本語サマリ】** SWGのTLS Inspection（HTTPS復号検査）用にCloudflare Root CA証明書をインストール。<br>GatewayがHTTPS通信を復号→検査→再暗号化するため、エンドポイント側でこの証明書を信頼しないとHTTPS接続が証明書エラーで失敗。
 
 ## Gateway Connection Methods
 
@@ -162,7 +175,7 @@ Both POPs are behind the same NAT (106.73.26.0), so IPv4 DNS alone cannot distin
 
 POP2 uses cloudflared as a local DoH proxy (port 53), forwarding queries to a dedicated Gateway endpoint (`xx579sxsi4.cloudflare-gateway.com`). This URL token identifies POP2 as eve-lab-2, enabling per-site policy separation under a single NAT.
 
-**【日本語サマリ】**
+**【日本語サマリ】**<br>
 Cloudflare GatewayはWARP（フルトンネル）、DoH（DNS専用）、IPv4 DNS（エージェントレス）の
 3種類の接続方法を提供。本ラボでは同一NAT配下の2拠点を区別するため、
 POP1はWARP、POP2はDoH URLトークンで別のDNS Locationに接続し、
