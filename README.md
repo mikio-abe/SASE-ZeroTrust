@@ -2,6 +2,15 @@
 
 Secure Access Service Edge (SASE) implementation using Cloudflare Zero Trust, integrated with SD-WAN overlay.
 
+## TL;DR
+- **Goal:** Verify SWG / DNS / ZTNA enforcement when traffic traverses encrypted tunnels
+- **Design choice:** Same NAT, two POPs → POP1 uses **WARP** (full SWG), POP2 uses **cloudflared DoH** (DNS-only) to separate DNS Locations
+- **Key finding:** Under QUIC/MASQUE, packet capture loses L7 visibility — Cloudflare Gateway Logs replace tcpdump as the primary verification tool
+
+**【日本語サマリ】**<br>
+暗号化トンネル環境でSWG/DNS/ZTNAの制御ポイントを検証しています。<br>
+同一NAT配下の2拠点をWARP（フルSWG）とDoH（DNS専用）で分離し、拠点別ポリシーを実現しています。<br>
+QUIC/MASQUE環境ではtcpdumpでL7が見えないため、Cloudflare Gateway Logsが主要な検証手段となることを確認しました。
 ---
 
 ## 🔬Overview
