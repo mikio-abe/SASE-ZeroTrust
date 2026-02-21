@@ -141,6 +141,33 @@ curl -o /usr/local/share/ca-certificates/cloudflare.crt \
 update-ca-certificates
 ```
 
+## Gateway Connection Methods
+
+Cloudflare Gateway supports multiple connection methods — not just the WARP agent:
+
+| Method | Protocol | Scope | Identification | Agent Required |
+|--------|----------|-------|----------------|----------------|
+| WARP Client | MASQUE/QUIC (UDP 443) | DNS + HTTP + All Traffic | Device enrollment | Yes |
+| cloudflared DoH | HTTPS (TCP 443) | DNS only | DoH URL token | No (proxy process) |
+| IPv4/IPv6 DNS | UDP 53 → 172.64.36.1 | DNS only | Source IP | No (agentless) |
+
+### Why This Lab Uses Two Methods
+
+Both POPs are behind the same NAT (106.73.26.0), so IPv4 DNS alone cannot distinguish them. Different methods are used to assign separate DNS Locations:
+
+| POP | Method | DNS Location | Policy Scope |
+|-----|--------|-------------|-------------|
+| CF-POP1 | WARP | eve-lab | DNS + HTTP (full SWG) |
+| CF-POP2 | cloudflared DoH | eve-lab-2 | DNS only |
+
+POP2 uses cloudflared as a local DoH proxy (port 53), forwarding queries to a dedicated Gateway endpoint (`xx579sxsi4.cloudflare-gateway.com`). This URL token identifies POP2 as eve-lab-2, enabling per-site policy separation under a single NAT.
+
+**【日本語サマリ】**
+Cloudflare GatewayはWARP（フルトンネル）、DoH（DNS専用）、IPv4 DNS（エージェントレス）の
+3種類の接続方法を提供。本ラボでは同一NAT配下の2拠点を区別するため、
+POP1はWARP、POP2はDoH URLトークンで別のDNS Locationに接続し、
+拠点別ポリシー適用とログ分離を実現。
+
 **DNS Service Conflict Resolution**
 
 cloudflared, WARP, and systemd-resolved all compete for port 53.
