@@ -207,7 +207,7 @@ systemctl disable systemd-resolved
 ```
 
 <br>**【日本語サマリ】**  <br>
-systemd-resolved、cloudflared、WARPの3つがport 53を取り合います。
+systemd-resolved、cloudflared、WARPの3つがport 53を取り合い競合しました。
 POP1はWARP（フルSWG）、POP2はcloudflared DoH（DNS Location識別用）がport 53を占有しています。
 WARPとcloudflaredは同じポートを使用するため共存できません。
 
@@ -237,7 +237,7 @@ Excluding all possible mobile IP ranges is not practical.
 
 <br>**【日本語サマリ】**  <br>
 WARPがデフォルトで全トラフィックをCloudflare経由にするため、POP間のWireGuard Endpointへの通信もWARP経由となりトンネル確立に失敗します。
-Split TunnelでEndpoint IPを除外しましたが、POP2のモバイル回線（docomo）はグローバルIPが広範囲に変動するため、恒久対策は困難です。
+Split TunnelでEndpoint IPを除外しましたが、POP2のモバイル回線（docomo）はグローバルIPが接続のたびに広範囲に変動するため、恒久対策は困難です。
 ラボ運用方針としてPOP2のWARPは常時OFFとし、SWGデモはPOP1（固定IP）のみで実施しています。
 本番環境ではMagic WANで直接Cloudflareに接続するため、この問題は発生しません。
 
