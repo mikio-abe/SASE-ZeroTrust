@@ -11,6 +11,7 @@ Secure Access Service Edge (SASE) implementation using Cloudflare Zero Trust, in
 暗号化トンネル環境でSWG/DNS/ZTNAの制御ポイントを検証しています。<br>
 同一NAT配下の2拠点をWARP（フルSWG）とDoH（DNS専用）で分離し、拠点別ポリシーを実現しています。<br>
 QUIC/MASQUE環境ではtcpdumpでL7が見えないため、Cloudflare Gateway Logsが主要な検証手段となることを確認しました。
+
 ---
 
 ## 🔬Overview
