@@ -241,7 +241,7 @@ However, POP2 uses a mobile carrier (docomo) whose global IP changes across wide
 
 Excluding all possible mobile IP ranges is not practical.
 
-**Lab policy:** WARP is kept OFF on POP2 permanently. SWG demonstration uses POP1 only (fixed IP: 106.73.26.0/32).
+**Lab policy:** WARP is kept OFF on POP2 permanently. SWG demonstration uses POP1 only (fixed IP: 106.73.x.x/32).
 
 > **Note:** In production, this issue does not exist — firewalls connect to Cloudflare via Magic WAN directly, not through a WireGuard relay between POPs.
 
