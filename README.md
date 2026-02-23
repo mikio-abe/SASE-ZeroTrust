@@ -365,6 +365,45 @@ WARP/QUIC環境ではtcpdumpでTCPハンドシェークやペイロードが見�
 代わりにCloudflare Gateway LogsでDNS/HTTPポリシー適用状況を確認します。
 
 ---
+## ⚠️ Known Issues & Version Dependencies
+
+### cloudflared `proxy-dns` Removal (2026.2.0)
+
+`cloudflared` version `2026.2.0` removed the `proxy-dns` feature.
+This breaks POP2's DoH proxy configuration used for DNS Location identification.
+
+**Error:**
+```
+ERR DNS Proxy is no longer supported error="dns-proxy feature is not supported, since version 2026.2.0"
+```
+
+| Version | proxy-dns | Status |
+|---------|-----------|--------|
+| 2025.4.2 | ✅ Supported | Last known working version |
+| 2026.2.0 | ❌ Removed | Service fails on startup |
+
+**Workaround:** Pin to version `2025.4.2`:
+
+```bash
+# Do NOT use "latest" — proxy-dns is removed in 2026.2.0+
+curl -L --output cloudflared.deb \
+  https://github.com/cloudflare/cloudflared/releases/download/2025.4.2/cloudflared-linux-amd64.deb
+sudo dpkg -i cloudflared.deb
+```
+
+> **Note:** SASE components are cloud-managed services — vendors can deprecate features without notice.
+> Always pin versions in deployment scripts and verify compatibility after upgrades.
+> This is a common operational challenge across all SASE platforms (Cloudflare, Zscaler, Prisma Access, FortiSASE).
+
+<br>**【日本語サマリ】**  <br>
+cloudflared 2026.2.0でproxy-dns機能が廃止され、POP2のDoHプロキシが起動不能になりました。<br>
+対策としてバージョン2025.4.2を固定指定してインストールしています。<br>
+SASEはクラウド管理サービスであり、ベンダーが予告なく機能を廃止する可能性があります。<br>
+デプロイスクリプトではバージョンを固定し、アップグレード後は互換性を必ず検証すること。<br>
+これはCloudflareに限らず、Zscaler・Prisma Access・FortiSASE等すべてのSASEプラットフォームに共通する運用課題です。
+
+---
+
 
 ## 🔗Related Components
 
