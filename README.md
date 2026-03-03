@@ -68,9 +68,10 @@ DNS policy is enforced per POP via separate DNS Locations (see [Gateway Connecti
 | Application Access | Per-app access policies |
 | Device Posture | WARP client enrollment verification |
 
-#### IdP Integration
+### 🔧IdP Integration
 
 ![image](https://github.com/user-attachments/assets/e6e5c844-3b02-4318-bcd6-b99a4f5c9502)
+
 **📷 Identity Provider integrations**
 
 Configured IdPs:
