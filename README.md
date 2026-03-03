@@ -266,7 +266,7 @@ POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site co
 
 <img width="520" height="411" alt="image" src="https://github.com/user-attachments/assets/a08bb0b1-82d6-4464-a1bd-0ab7281bfe2f" />
 
-<BR><BR>
+<BR>
 
 This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:<BR>
 
