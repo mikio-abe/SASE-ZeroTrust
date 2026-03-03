@@ -256,20 +256,21 @@ Split TunnelでEndpoint IPを除外しましたが、POP2のモバイル回線�
 ## 🔀Traffic Flow
 
 ### WARP Client Connection
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/c0a5f931-05a6-452b-8ef0-c66ba1703697" />
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/d5b6a309-c60d-41a1-922b-6e49728cbc00" />
+
 
 
 ### WireGuard POP-to-POP Connection
 
 POP1 and POP2 establish a WireGuard tunnel over the internet for site-to-site connectivity:<BR>
 
-<img width="520" alt="image" src="https://github.com/user-attachments/assets/1aa707cc-c8c7-4999-8b35-afb7f8accbac" />
+<img width="520" height="411" alt="image" src="https://github.com/user-attachments/assets/a08bb0b1-82d6-4464-a1bd-0ab7281bfe2f" />
 
 <BR><BR>
 
 This WireGuard tunnel carries SD-WAN IPsec (ESP) traffic between FortiGate devices:<BR>
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/b46679fc-15e4-4e9d-b7a7-94bbe4cf7415" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b6ba47b3-7b50-4d0e-8821-ed56db537bca" />
 
 <BR><BR>
 
