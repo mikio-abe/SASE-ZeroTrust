@@ -16,6 +16,9 @@ QUIC/MASQUE環境ではtcpdumpでL7が見えないため、Cloudflare Gateway Lo
 
 ## 🔬Overview
 
+<img width="1200" alt="image" src="https://github.com/user-attachments/assets/50a5f53f-f09d-4138-9e92-c4b6d2f0d84e" />
+
+
 This component is part of an SD-WAN–integrated SASE lab.
 It focuses on how traffic visibility and security enforcement points change
 when traffic traverses encrypted tunnels.
